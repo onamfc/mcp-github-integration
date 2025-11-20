@@ -2,11 +2,11 @@
   "name": "@github-mcp/api-client",
   "version": "1.0.0",
   "description": "GitHub API client for MCP server integration",
-  "private": true,
+  "license": "MIT",
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/mcp-github-integration.git"
+    "url": "https://github.com/onamfc/mcp-github-integration.git"
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -22,9 +22,7 @@
   "dependencies": {
     "@octokit/rest": "^20.0.2",
     "@octokit/types": "^12.4.0",
-    "@onamfc/api-mocker": "^1.0.0",
     "@onamfc/developer-log": "^1.0.0",
-    "@onamfc/npm-vuln-scanner": "^1.0.0",
     "@onamfc/pkg-inspect": "^1.0.0"
   },
   "devDependencies": {

@@ -8,12 +8,6 @@ declare module '@onamfc/developer-log' {
   export default log;
 }
 
-declare module '@onamfc/api-mocker';
-
 declare module '@onamfc/pkg-inspect' {
   export function inspect(options: { path: string }): Promise<any>;
-}
-
-declare module '@onamfc/npm-vuln-scanner' {
-  export function scanVulnerabilities(options: { path: string }): Promise<any>;
 }

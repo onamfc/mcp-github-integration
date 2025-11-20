@@ -21,7 +21,6 @@ A comprehensive TypeScript package for interacting with the GitHub API through a
   - Advanced search across repositories, issues, PRs, code, commits, users, topics, and labels
 - Built-in logging with `@onamfc/developer-log`
 - Package inspection with `@onamfc/pkg-inspect`
-- Vulnerability scanning with `@onamfc/npm-vuln-scanner`
 - Robust error handling
 
 ## Installation
@@ -509,24 +508,6 @@ try {
 - Always use webhook secrets for signature verification
 - Enable Dependabot security alerts on repositories
 
-## Package Integrations
-
-### @onamfc/developer-log
-
-Used for structured logging throughout the application. All components use context-aware logging.
-
-### @onamfc/pkg-inspect
-
-Available for inspecting package information and dependencies.
-
-### @onamfc/npm-vuln-scanner
-
-Available for scanning npm packages for vulnerabilities.
-
-### @onamfc/api-mocker
-
-Available for mocking API responses during development and testing.
-
 ## API Documentation
 
 For detailed GitHub API documentation, visit:
@@ -536,8 +517,10 @@ For detailed GitHub API documentation, visit:
 
 ## License
 
-Private package - not for distribution
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Contributing
 
-This is a private package. Contact the maintainer for contribution guidelines.
+Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
+
+Please make sure to update tests as appropriate.
