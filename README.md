@@ -1,6 +1,6 @@
 # GitHub MCP API Client
 
-A comprehensive TypeScript package for interacting with the GitHub API through an MCP (Model Context Protocol) server integration.
+A TypeScript package for interacting with the GitHub API through an MCP (Model Context Protocol) server integration.
 
 ## Features
 
