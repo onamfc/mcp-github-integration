@@ -1,4 +1,5 @@
 import { GitHubClient } from '../src/index.js';
+import dev from '@onamfc/developer-log';
 
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN || '';
 const REPO_OWNER = process.env.REPO_OWNER || 'octocat';
@@ -7,21 +8,21 @@ const REPO_NAME = process.env.REPO_NAME || 'Hello-World';
 async function basicUsageExample() {
   const client = new GitHubClient({ token: GITHUB_TOKEN });
 
-  console.log('GitHub MCP API Client - Basic Usage Example\n');
-  console.log(`${'═'.repeat(60)}\n`);
+  dev.info('GitHub MCP API Client - Basic Usage Example\n');
+  dev.info(`${'═'.repeat(60)}\n`);
 
   try {
-    console.log('1. Getting Repository Information\n');
+    dev.info('1. Getting Repository Information\n');
     const repo = await client.getRepository(REPO_OWNER, REPO_NAME);
-    console.log(`Repository: ${repo.full_name}`);
-    console.log(`Description: ${repo.description}`);
-    console.log(`Stars: ${repo.stargazers_count}`);
-    console.log(`Forks: ${repo.forks_count}`);
-    console.log(`Default Branch: ${repo.default_branch}`);
-    console.log(`Created: ${new Date(repo.created_at).toLocaleDateString()}`);
-    console.log();
+    dev.info(`Repository: ${repo.full_name}`);
+    dev.info(`Description: ${repo.description}`);
+    dev.info(`Stars: ${repo.stargazers_count}`);
+    dev.info(`Forks: ${repo.forks_count}`);
+    dev.info(`Default Branch: ${repo.default_branch}`);
+    dev.info(`Created: ${new Date(repo.created_at).toLocaleDateString()}`);
+    dev.info('');
 
-    console.log('2. Listing Open Issues\n');
+    dev.info('2. Listing Open Issues\n');
     const issues = await client.listIssues({
       owner: REPO_OWNER,
       repo: REPO_NAME,
@@ -30,18 +31,18 @@ async function basicUsageExample() {
     });
 
     if (issues.length === 0) {
-      console.log('No open issues found.');
+      dev.info('No open issues found.');
     } else {
-      console.log(`Found ${issues.length} open issue(s):\n`);
+      dev.info(`Found ${issues.length} open issue(s):\n`);
       issues.forEach(issue => {
-        console.log(`  #${issue.number}: ${issue.title}`);
-        console.log(`  Created by: ${issue.user.login}`);
-        console.log(`  State: ${issue.state}`);
-        console.log();
+        dev.info(`  #${issue.number}: ${issue.title}`);
+        dev.info(`  Created by: ${issue.user.login}`);
+        dev.info(`  State: ${issue.state}`);
+        dev.info('');
       });
     }
 
-    console.log('3. Listing Pull Requests\n');
+    dev.info('3. Listing Pull Requests\n');
     const pullRequests = await client.listPullRequests({
       owner: REPO_OWNER,
       repo: REPO_NAME,
@@ -50,72 +51,72 @@ async function basicUsageExample() {
     });
 
     if (pullRequests.length === 0) {
-      console.log('No open pull requests found.');
+      dev.info('No open pull requests found.');
     } else {
-      console.log(`Found ${pullRequests.length} open PR(s):\n`);
+      dev.info(`Found ${pullRequests.length} open PR(s):\n`);
       pullRequests.forEach(pr => {
-        console.log(`  #${pr.number}: ${pr.title}`);
-        console.log(`  Author: ${pr.user.login}`);
-        console.log(`  State: ${pr.state}`);
-        console.log();
+        dev.info(`  #${pr.number}: ${pr.title}`);
+        dev.info(`  Author: ${pr.user.login}`);
+        dev.info(`  State: ${pr.state}`);
+        dev.info('');
       });
     }
 
-    console.log('4. Listing Branches\n');
+    dev.info('4. Listing Branches\n');
     const branches = await client.listBranches(REPO_OWNER, REPO_NAME, 10);
 
-    console.log(`Found ${branches.length} branch(es):\n`);
+    dev.info(`Found ${branches.length} branch(es):\n`);
     branches.forEach(branch => {
-      console.log(`  - ${branch.name} (${branch.commit.sha.substring(0, 7)})`);
+      dev.info(`  - ${branch.name} (${branch.commit.sha.substring(0, 7)})`);
     });
-    console.log();
+    dev.info('');
 
-    console.log('5. Listing Recent Commits\n');
+    dev.info('5. Listing Recent Commits\n');
     const commits = await client.listCommits({
       owner: REPO_OWNER,
       repo: REPO_NAME,
       per_page: 5,
     });
 
-    console.log(`Last ${commits.length} commit(s):\n`);
+    dev.info(`Last ${commits.length} commit(s):\n`);
     commits.forEach(commit => {
-      console.log(`  ${commit.sha.substring(0, 7)} - ${commit.commit.message.split('\n')[0]}`);
-      console.log(`  By: ${commit.commit.author.name}`);
-      console.log(`  Date: ${new Date(commit.commit.author.date).toLocaleString()}`);
-      console.log();
+      dev.info(`  ${commit.sha.substring(0, 7)} - ${commit.commit.message.split('\n')[0]}`);
+      dev.info(`  By: ${commit.commit.author.name}`);
+      dev.info(`  Date: ${new Date(commit.commit.author.date).toLocaleString()}`);
+      dev.info('');
     });
 
-    console.log('6. Getting Authenticated User Info\n');
+    dev.info('6. Getting Authenticated User Info\n');
     const user = await client.getAuthenticatedUser();
-    console.log(`Logged in as: ${user.login}`);
-    console.log(`Name: ${user.name || 'N/A'}`);
-    console.log(`Public Repos: ${user.public_repos}`);
-    console.log(`Followers: ${user.followers}`);
-    console.log();
+    dev.info(`Logged in as: ${user.login}`);
+    dev.info(`Name: ${user.name || 'N/A'}`);
+    dev.info(`Public Repos: ${user.public_repos}`);
+    dev.info(`Followers: ${user.followers}`);
+    dev.info('');
 
-    console.log(`${'═'.repeat(60)}`);
-    console.log('✓ Basic usage example complete!');
-    console.log(`${'═'.repeat(60)}\n`);
+    dev.info(`${'═'.repeat(60)}`);
+    dev.info('✓ Basic usage example complete!');
+    dev.info(`${'═'.repeat(60)}\n`);
 
   } catch (error: any) {
-    console.error('\n❌ Error:', error.message);
+    dev.error('\n❌ Error:', error.message);
     if (error.statusCode) {
-      console.error(`Status Code: ${error.statusCode}`);
+      dev.error(`Status Code: ${error.statusCode}`);
     }
     if (error.code) {
-      console.error(`Error Code: ${error.code}`);
+      dev.error(`Error Code: ${error.code}`);
     }
     process.exit(1);
   }
 }
 
 if (!GITHUB_TOKEN) {
-  console.error('Error: GITHUB_TOKEN environment variable is required\n');
-  console.error('Usage:');
-  console.error('  GITHUB_TOKEN=your_token npm run example:basic');
-  console.error('\nOptional:');
-  console.error('  REPO_OWNER=owner REPO_NAME=repo npm run example:basic');
-  console.error('\n');
+  dev.error('Error: GITHUB_TOKEN environment variable is required\n');
+  dev.error('Usage:');
+  dev.error('  GITHUB_TOKEN=your_token npm run example:basic');
+  dev.error('\nOptional:');
+  dev.error('  REPO_OWNER=owner REPO_NAME=repo npm run example:basic');
+  dev.error('\n');
   process.exit(1);
 }
 

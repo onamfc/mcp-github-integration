@@ -430,7 +430,7 @@ GITHUB_TOKEN=your_token npm run example:basic
 GITHUB_TOKEN=your_token REPO_OWNER=owner REPO_NAME=repo npm run example:basic
 ```
 
-**Note:** The `examples/` directory also contains advanced examples (setup-new-repo, pr-automation, webhook-handler, ci-cd-integration, repository-insights) that demonstrate more complex automation workflows. These are provided as reference implementations and may require additional client methods to be fully functional. See [`examples/README.md`](./examples/README.md) for details.
+**Note:** The `examples/` directory contains additional working examples including `setup-new-repo.ts` which demonstrates repository setup automation. See [`examples/README.md`](./examples/README.md) for details.
 
 ## MCP Request/Response Format
 

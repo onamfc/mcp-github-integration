@@ -1,16 +1,17 @@
 import { GitHubClient } from '../src/index.js';
+import dev from '@onamfc/developer-log';
 
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN || '';
 
 async function setupNewRepository() {
   const client = new GitHubClient({ token: GITHUB_TOKEN });
 
-  console.log('Creating and configuring a new GitHub repository...\n');
+  dev.info('Creating and configuring a new GitHub repository...\n');
 
   try {
     const repoName = `example-project-${Date.now()}`;
 
-    console.log(`Step 1: Creating repository "${repoName}"...`);
+    dev.info(`Step 1: Creating repository "${repoName}"...`);
     const repo = await client.createRepository({
       name: repoName,
       description: 'Example project created via GitHub MCP API Client',
@@ -22,19 +23,19 @@ async function setupNewRepository() {
       has_projects: true,
       has_wiki: false,
     });
-    console.log(`✓ Repository created: ${repo.html_url}\n`);
+    dev.info(`✓ Repository created: ${repo.html_url}\n`);
 
     const owner = repo.owner.login;
 
-    console.log('Step 2: Adding repository topics...');
-    await client.replaceRepositoryTopics({
+    dev.info('Step 2: Adding repository topics...');
+    await client.replaceRepositoryTopics(
       owner,
-      repo: repoName,
-      topics: ['example', 'demo', 'automation', 'github-api'],
-    });
-    console.log('✓ Topics added\n');
+      repoName,
+      ['example', 'demo', 'automation', 'github-api']
+    );
+    dev.info('✓ Topics added\n');
 
-    console.log('Step 3: Creating initial issue...');
+    dev.info('Step 3: Creating initial issue...');
     const issue = await client.createIssue({
       owner,
       repo: repoName,
@@ -52,22 +53,16 @@ This issue tracks the initial setup tasks:
 Created automatically via GitHub MCP API Client.`,
       labels: ['documentation', 'setup'],
     });
-    console.log(`✓ Issue created: #${issue.number}\n`);
+    dev.info(`✓ Issue created: #${issue.number}\n`);
 
-    console.log('Step 4: Enabling security features...');
-    await client.enableVulnerabilityAlerts({
-      owner,
-      repo: repoName,
-    });
-    console.log('✓ Dependabot vulnerability alerts enabled\n');
+    dev.info('Step 4: Enabling security features...');
+    await client.enableVulnerabilityAlerts(owner, repoName);
+    dev.info('✓ Dependabot vulnerability alerts enabled\n');
 
-    await client.enableAutomatedSecurityFixes({
-      owner,
-      repo: repoName,
-    });
-    console.log('✓ Automated security fixes enabled\n');
+    await client.enableAutomatedSecurityFixes(owner, repoName);
+    dev.info('✓ Automated security fixes enabled\n');
 
-    console.log('Step 5: Creating labels for issue tracking...');
+    dev.info('Step 5: Creating labels for issue tracking...');
     const customLabels = [
       { name: 'priority-high', color: 'd73a4a', description: 'High priority items' },
       { name: 'priority-medium', color: 'fbca04', description: 'Medium priority items' },
@@ -84,47 +79,47 @@ Created automatically via GitHub MCP API Client.`,
           color: label.color,
           description: label.description,
         });
-        console.log(`  ✓ Created label: ${label.name}`);
+        dev.info(`  ✓ Created label: ${label.name}`);
       } catch (error: any) {
         if (error.statusCode === 422) {
-          console.log(`  - Label already exists: ${label.name}`);
+          dev.info(`  - Label already exists: ${label.name}`);
         } else {
           throw error;
         }
       }
     }
-    console.log();
+    dev.info('');
 
-    console.log('Step 6: Adding collaborator (example - update with real username)...');
-    console.log('  (Skipped - update code with real GitHub username)\n');
+    dev.info('Step 6: Adding collaborator (example - update with real username)...');
+    dev.info('  (Skipped - update code with real GitHub username)\n');
 
-    console.log('═══════════════════════════════════════════════════════');
-    console.log('✓ Repository setup complete!');
-    console.log('═══════════════════════════════════════════════════════');
-    console.log(`Repository URL: ${repo.html_url}`);
-    console.log(`Clone URL: ${repo.clone_url}`);
-    console.log(`Initial Issue: ${repo.html_url}/issues/${issue.number}`);
-    console.log('═══════════════════════════════════════════════════════\n');
+    dev.info('═══════════════════════════════════════════════════════');
+    dev.info('✓ Repository setup complete!');
+    dev.info('═══════════════════════════════════════════════════════');
+    dev.info(`Repository URL: ${repo.html_url}`);
+    dev.info(`Clone URL: ${repo.html_url}.git`);
+    dev.info(`Initial Issue: ${repo.html_url}/issues/${issue.number}`);
+    dev.info('═══════════════════════════════════════════════════════\n');
 
-    console.log('Next steps:');
-    console.log('1. Clone the repository');
-    console.log('2. Add your project code');
-    console.log('3. Set up CI/CD workflows');
-    console.log('4. Configure branch protection rules');
-    console.log('5. Invite team members\n');
+    dev.info('Next steps:');
+    dev.info('1. Clone the repository');
+    dev.info('2. Add your project code');
+    dev.info('3. Set up CI/CD workflows');
+    dev.info('4. Configure branch protection rules');
+    dev.info('5. Invite team members\n');
 
   } catch (error: any) {
-    console.error('Error setting up repository:', error.message);
+    dev.error('Error setting up repository:', error.message);
     if (error.statusCode) {
-      console.error(`Status Code: ${error.statusCode}`);
+      dev.error(`Status Code: ${error.statusCode}`);
     }
     process.exit(1);
   }
 }
 
 if (!GITHUB_TOKEN) {
-  console.error('Error: GITHUB_TOKEN environment variable is required');
-  console.error('Usage: GITHUB_TOKEN=your_token_here npm run example:setup-repo');
+  dev.error('Error: GITHUB_TOKEN environment variable is required');
+  dev.error('Usage: GITHUB_TOKEN=your_token_here npm run example:setup-repo');
   process.exit(1);
 }
 

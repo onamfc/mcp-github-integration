@@ -4,7 +4,33 @@ This directory contains practical, real-world examples demonstrating how to use 
 
 ## Available Examples
 
-### 1. Setup New Repository (`setup-new-repo.ts`)
+### 1. Basic Usage (`basic-usage.ts`)
+
+Demonstrates fundamental operations with the GitHub API client:
+
+- Fetch repository information
+- List open issues
+- List pull requests
+- List branches
+- List recent commits
+- Get authenticated user info
+
+**Usage:**
+```bash
+GITHUB_TOKEN=your_token npm run example:basic
+```
+
+**Optional Environment Variables:**
+```bash
+GITHUB_TOKEN=your_token \
+REPO_OWNER=octocat \
+REPO_NAME=Hello-World \
+npm run example:basic
+```
+
+---
+
+### 2. Setup New Repository (`setup-new-repo.ts`)
 
 Automates the complete setup of a new GitHub repository with best practices:
 
@@ -27,154 +53,6 @@ GITHUB_TOKEN=your_token npm run example:setup-repo
 4. Creates a setup tracking issue
 5. Enables Dependabot security features
 6. Creates priority and workflow labels
-
----
-
-### 2. Pull Request Automation (`pr-automation.ts`)
-
-Automates pull request reviews and management:
-
-- Lists all open pull requests
-- Analyzes PR characteristics (size, tests, documentation)
-- Auto-approves PRs that meet quality criteria
-- Requests tests for PRs missing them
-- Optionally auto-merges approved PRs
-- Provides detailed metrics for each PR
-
-**Usage:**
-```bash
-GITHUB_TOKEN=your_token \
-REPO_OWNER=owner \
-REPO_NAME=repo \
-AUTO_MERGE=true \
-npm run example:pr-automation
-```
-
-**Environment Variables:**
-- `GITHUB_TOKEN` (required) - Your GitHub personal access token
-- `REPO_OWNER` (required) - Repository owner username or organization
-- `REPO_NAME` (required) - Repository name
-- `AUTO_MERGE` (optional) - Set to `true` to enable auto-merge for approved PRs
-
-**Auto-approval criteria:**
-- Tests are included
-- PR size < 500 lines changed
-- No changes requested in reviews
-- PR author is not the repository owner
-
----
-
-### 3. Webhook Handler (`webhook-handler.ts`)
-
-A complete HTTP server for handling GitHub webhooks:
-
-- Verifies webhook signatures for security
-- Handles multiple event types (push, pull_request, issues, workflow_run)
-- Automatically labels new issues
-- Adds welcome comments to new PRs
-- Cleans up merged PR branches
-- Creates issues for CI failures
-
-**Usage:**
-```bash
-GITHUB_TOKEN=your_token \
-WEBHOOK_SECRET=your_webhook_secret \
-PORT=3000 \
-npm run example:webhook
-```
-
-**Environment Variables:**
-- `GITHUB_TOKEN` (required) - Your GitHub personal access token
-- `WEBHOOK_SECRET` (optional) - Webhook secret for signature verification
-- `PORT` (optional) - Server port (default: 3000)
-
-**Supported Events:**
-- `push` - Logs commit information
-- `pull_request` - Adds welcome comments, cleans up branches
-- `issues` - Auto-labels based on title/body content
-- `workflow_run` - Creates issues for CI failures
-
-**Setting up webhooks:**
-1. Start the webhook handler locally or deploy to a server
-2. Use a tunnel service (ngrok) if testing locally
-3. Go to your repository settings → Webhooks
-4. Add webhook URL (e.g., `https://your-domain.com/`)
-5. Select events: Push, Pull requests, Issues, Workflow runs
-6. Add webhook secret (if using)
-
----
-
-### 4. CI/CD Integration (`ci-cd-integration.ts`)
-
-Manages GitHub Actions workflows and CI/CD pipelines:
-
-- Lists all workflows in a repository
-- Shows recent workflow runs with status
-- Calculates success rates and durations
-- Optionally cancels in-progress runs
-- Optionally retries failed runs
-- Lists workflow artifacts
-- Manages repository secrets
-- Can trigger workflows programmatically
-
-**Usage:**
-```bash
-GITHUB_TOKEN=your_token \
-REPO_OWNER=owner \
-REPO_NAME=repo \
-CANCEL_IN_PROGRESS=true \
-RETRY_FAILED=true \
-npm run example:ci-cd
-```
-
-**Environment Variables:**
-- `GITHUB_TOKEN` (required) - Your GitHub personal access token
-- `REPO_OWNER` (required) - Repository owner
-- `REPO_NAME` (required) - Repository name
-- `CANCEL_IN_PROGRESS` (optional) - Cancel running workflows
-- `RETRY_FAILED` (optional) - Retry failed workflows
-
-**Triggering workflows:**
-```bash
-GITHUB_TOKEN=your_token \
-REPO_OWNER=owner \
-REPO_NAME=repo \
-WORKFLOW_ID=deploy.yml \
-REF=main \
-ENVIRONMENT=production \
-npm run example:ci-cd trigger
-```
-
----
-
-### 5. Repository Insights (`repository-insights.ts`)
-
-Generates comprehensive repository analytics and reports:
-
-- Repository overview (stars, forks, size, topics)
-- Programming language breakdown
-- Contributor statistics
-- Commit activity analysis
-- Pull request metrics (merge times, open/closed counts)
-- Issue metrics (resolution times, label distribution)
-- Recent activity summary
-- Release information
-
-**Usage:**
-```bash
-GITHUB_TOKEN=your_token \
-REPO_OWNER=owner \
-REPO_NAME=repo \
-npm run example:insights
-```
-
-**Output includes:**
-- Top contributors with commit counts and line changes
-- Language distribution with percentages
-- Average PR merge time
-- Average issue resolution time
-- Top issue labels
-- Recent commits and releases
 
 ---
 
@@ -205,16 +83,13 @@ npm run example:insights
 
 ### Quick Start Scripts
 
-Add these to your `package.json`:
+Available scripts in `package.json`:
 
 ```json
 {
   "scripts": {
-    "example:setup-repo": "node dist/examples/setup-new-repo.js",
-    "example:pr-automation": "node dist/examples/pr-automation.js",
-    "example:webhook": "node dist/examples/webhook-handler.js",
-    "example:ci-cd": "node dist/examples/ci-cd-integration.js",
-    "example:insights": "node dist/examples/repository-insights.js"
+    "example:basic": "node dist/examples/basic-usage.js",
+    "example:setup-repo": "node dist/examples/setup-new-repo.js"
   }
 }
 ```
@@ -227,11 +102,7 @@ Add these to your `package.json`:
    - Use environment variables
    - Add `.env` to `.gitignore`
 
-2. **Verify webhook signatures**
-   - Always use `WEBHOOK_SECRET` in production
-   - The webhook handler validates signatures automatically
-
-3. **Use minimal token scopes**
+2. **Use minimal token scopes**
    - Only request permissions you need
    - Rotate tokens regularly
 
@@ -259,8 +130,8 @@ Each example can be customized for your needs:
 
 1. **Modify criteria** - Change auto-approval rules, label matching, etc.
 2. **Add notifications** - Integrate with Slack, Discord, email
-3. **Store metrics** - Save insights to a database (Supabase recommended)
-4. **Add more events** - Extend webhook handler with additional event types
+3. **Store metrics** - Save insights to a database
+4. **Extend functionality** - Add more GitHub operations as needed
 
 ## Support
 
@@ -271,4 +142,4 @@ For issues or questions:
 
 ## License
 
-These examples are part of the GitHub MCP API Client package and follow the same license.
+These examples are part of the GitHub MCP API Client package and follow the same MIT license.

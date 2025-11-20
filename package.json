@@ -17,7 +17,8 @@
     "test:watch": "NODE_OPTIONS='--experimental-vm-modules' npx vitest",
     "test:ui": "NODE_OPTIONS='--experimental-vm-modules' npx vitest --ui",
     "test:coverage": "NODE_OPTIONS='--experimental-vm-modules' npx vitest run --coverage",
-    "example:basic": "node dist/examples/basic-usage.js"
+    "example:basic": "node dist/examples/basic-usage.js",
+    "example:setup-repo": "node dist/examples/setup-new-repo.js"
   },
   "dependencies": {
     "@octokit/rest": "^20.0.2",
