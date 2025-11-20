@@ -25,7 +25,17 @@ A TypeScript package for interacting with the GitHub API through an MCP (Model C
 
 ## Installation
 
+### From NPM
+
 ```bash
+npm install @onamfc/mcp-github-integration
+```
+
+### From Source
+
+```bash
+git clone https://github.com/onamfc/mcp-github-integration.git
+cd mcp-github-integration
 npm install
 npm run build
 ```
@@ -43,7 +53,7 @@ export GITHUB_TOKEN=your_github_token_here
 ### Using the MCP Server
 
 ```typescript
-import { MCPServer } from '@github-mcp/api-client';
+import { MCPServer } from '@onamfc/mcp-github-integration';
 
 const server = new MCPServer(process.env.GITHUB_TOKEN);
 
@@ -70,7 +80,7 @@ const searchResponse = await server.handleRequest({
 ### Using the GitHub Client Directly
 
 ```typescript
-import { GitHubClient } from '@github-mcp/api-client';
+import { GitHubClient } from '@onamfc/mcp-github-integration';
 
 const client = new GitHubClient({
   token: process.env.GITHUB_TOKEN,

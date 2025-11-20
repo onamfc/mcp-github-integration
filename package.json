@@ -1,5 +1,5 @@
 {
-  "name": "@github-mcp/api-client",
+  "name": "@onamfc/mcp-github-integration",
   "version": "1.0.0",
   "description": "GitHub API client for MCP server integration",
   "license": "MIT",
