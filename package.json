@@ -1,0 +1,36 @@
+{
+  "name": "@github-mcp/api-client",
+  "version": "1.0.0",
+  "description": "GitHub API client for MCP server integration",
+  "private": true,
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/mcp-github-integration.git"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "npx -p typescript tsc",
+    "dev": "npx -p typescript tsc --watch",
+    "test": "NODE_OPTIONS='--experimental-vm-modules' npx vitest run",
+    "test:watch": "NODE_OPTIONS='--experimental-vm-modules' npx vitest",
+    "test:ui": "NODE_OPTIONS='--experimental-vm-modules' npx vitest --ui",
+    "test:coverage": "NODE_OPTIONS='--experimental-vm-modules' npx vitest run --coverage",
+    "example:basic": "node dist/examples/basic-usage.js"
+  },
+  "dependencies": {
+    "@octokit/rest": "^20.0.2",
+    "@octokit/types": "^12.4.0",
+    "@onamfc/api-mocker": "^1.0.0",
+    "@onamfc/developer-log": "^1.0.0",
+    "@onamfc/npm-vuln-scanner": "^1.0.0",
+    "@onamfc/pkg-inspect": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.25",
+    "@vitest/ui": "^4.0.10",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.10"
+  }
+}
